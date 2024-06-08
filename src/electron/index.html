@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="drag-region">
+    <div class="container">
+        <div class="window-controls">
+            <img src="./img/minimize.png" alt="Minimize Icon" id="minimizeBtn" class="window-icon" onclick="window.electron.minimizeWindow()">
+            <img src="./img/close.png" alt="Close Icon" id="closeBtn" class="window-icon" onclick="window.electron.closeWindow()">
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Veil</h1>
+            </div>
+            <ul class="menu">
+                <li><a href="index.html" draggable="false"><img src="./img/home.png" alt="Home Icon" class="icon">Dashboard</a></li>
+                <li><a href="credentials.html" draggable="false"><img src="./img/key.png" alt="Credentials Icon" class="icon">Credentials</a></li>
+                <li><a href="tasks.html" draggable="false"><img src="./img/boxes.png" alt="tasks Icon" class="icon">Tasks</a></li>
+                <li><a href="settings.html" draggable="false"><img src="./img/settings.png" alt="Settings Icon" class="icon">Settings</a></li>
+            </ul>
+            <div class="status">
+                <a href="#" class="status-item" onclick="window.electron.openDocumentation()"><img src="./img/document.png" alt="Documentation Icon" class="icon">Documentation</a>
+                <a href="#" class="status-item" onclick="window.electron.getSupport()"><img src="./img/help.png" alt="Help Icon" class="icon">Get Support</a>
+                <div class="connection-status">
+                    <span id="statusIndicator" class="status-indicator disconnected"></span>
+                    <span id="statusText">Disconnected</span>
+                </div>
+                <div class="version">
+                    <p>v1.0.0 (latest version)</p>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="landing-content">
+                <div class="index-content">
+                    <div class="announcement-container">
+                        <div class="announcement">
+                            <h2>Welcome to Veil!</h2>
+                            <p>The ultimate program for Foothill-De Anza district at your fingertips.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

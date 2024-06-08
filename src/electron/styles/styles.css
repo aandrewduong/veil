@@ -1,0 +1,625 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.drag-region {
+  -webkit-app-region: drag;
+  width: 100%;
+  height: 30px; /* Adjust as needed */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent; /* Ensure it's transparent to see the background */
+}
+
+.window-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  height: 30px; /* Match the height of .drag-region */
+}
+
+.window-icon {
+  width: 16px; /* Adjust the size as needed */
+  height: 16px; /* Adjust the size as needed */
+  margin: 7px; /* Center the icons vertically within the 30px height */
+  cursor: pointer;
+  filter: invert(100%);
+  -webkit-app-region: no-drag; /* Make sure the icons are not draggable */
+}
+
+body {
+  user-select: none;
+  font-family: 'Arial', sans-serif;
+  background-color: #0f0f1a;
+  color: #fff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh; /* Ensure sidebar height is fixed */
+  background-color: #161a2b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  user-select: none; /* Prevent text selection in the sidebar */
+}
+
+.sidebar .logo h1 {
+  font-size: 24px;
+  color: #4cd3c2;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  -webkit-user-drag: none; /* Prevent dragging links */
+  user-drag: none; /* Prevent dragging links */
+}
+
+.sidebar img {
+  -webkit-user-drag: none; /* Prevent dragging images */
+  user-drag: none; /* Prevent dragging images */
+}
+
+.menu {
+  list-style-type: none;
+  width: 100%;
+  padding: 0;
+}
+
+.menu li {
+  width: 100%;
+}
+
+.menu li a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  text-align: left;
+  font-size: 14px;
+}
+
+.menu li a:hover {
+  background-color: #1d2438;
+}
+
+.menu img.icon {
+  width: 16px; /* Adjust the size as needed */
+  height: 16px; /* Adjust the size as needed */
+  margin-right: 8px; /* Adjust the spacing as needed */
+  vertical-align: middle; /* Ensure the icon aligns with the text */
+  filter: invert(100%);
+}
+
+.status {
+  margin-top: 20px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.status a.status-item {
+  display: block;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.status a.status-item:hover {
+  background-color: #1d2438;
+}
+
+.status img.icon {
+  width: 16px; /* Ensure the icon is the same size */
+  height: 16px; /* Ensure the icon is the same size */
+  margin-right: 8px;
+  vertical-align: middle;
+  filter: invert(100%);
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.connected {
+  background-color: #4cd3c2;
+}
+
+.disconnected {
+  background-color: red;
+}
+
+.version {
+  margin-top: 10px;
+}
+
+.version p {
+  margin: 5px 0;
+  font-size: 0.875rem;
+  color: #aaa;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 40px;
+  background-color: #1d2438;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-y: auto; /* Enable scrolling for main content */
+}
+
+.table-container {
+  max-height: calc(100vh - 200px); /* Adjust the height as needed */
+  overflow-y: auto;
+  width: 100%;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  table-layout: fixed; /* Ensure fixed table layout */
+}
+
+.table-container th, .table-container td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #2a2e43;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflow text */
+}
+
+.table-container th {
+  background-color: #2a2e43;
+}
+
+.table-container td {
+  background-color: #1d2438;
+}
+
+.table-container td .checkbox-cell {
+  display: flex;
+  align-items: center;
+}
+
+.table-container td .checkbox-cell input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.table-container .table-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.table-container .table-actions img {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  cursor: pointer;
+  filter: invert(100%);
+}
+
+.settings-content {
+  width: 100%;
+  max-width: 600px;
+}
+
+.settings-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.settings-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.webhooks label, .delays label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.webhooks input[type="text"] {
+  width: calc(100% - 100px);
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #2a2e43;
+  border: 1px solid #2a2e43;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.credentials input[type="text"], .credentials input[type="password"] {
+  width: calc(70% - 100px);
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #2a2e43;
+  border: 1px solid #2a2e43;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.test-btn {
+  padding: 10px 20px;
+  background-color: #4cd3c2;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.test-btn:hover {
+  background-color: #3bb8a7;
+}
+
+.save-settings-btn {
+  padding: 15px 30px;
+  background-color: #4cd3c2;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.save-settings-btn:hover {
+  background-color: #3bb8a7;
+}
+
+.save-credentials-btn {
+  padding: 15px 30px;
+  background-color: #4cd3c2;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+  background-color: #1d2438;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.create-btn {
+  padding: 10px 20px;
+  background-color: green;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.delete-btn {
+  padding: 10px 20px;
+  background-color: red;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.75); /* Semi-transparent background */
+}
+
+.modal-content {
+  background-color: #1d2438;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #2a2e43;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.modal-content form input[type="text"], .modal-content form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #2a2e43;
+  border: 1px solid #2a2e43;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.modal-content form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #2a2e43;
+  border: 1px solid #2a2e43;
+  color: #fff;
+  border-radius: 4px;
+  appearance: none; /* Remove default styles */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14 3.451 6.604C3.18 6.308 3.352 5.806 3.805 5.806h8.39c.454 0 .626.502.354.798l-3.797 4.537a.533.533 0 0 1-.76 0z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.modal-content form button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: #4cd3c2;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.modal-content form button:hover {
+  background-color: #3bb8a7;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.75rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  display: none; /* Initially hidden */
+}
+
+input.error {
+  border-color: red;
+}
+
+.announcement-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #161a2b;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.announcement h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #4cd3c2;
+}
+
+.announcement p {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.notifications, .miscellaneous, .credentials {
+  background-color: #161a2b;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.notifications, .miscellaneous, .credentials h3 {
+  margin-bottom: 10px;
+  color: #4cd3c2;
+}
+
+.notifications label, .miscellaneous label, .credentials label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.notifications input[type="text"], .miscellaneous input[type="text"], .credentials input[type="text"], .credentials input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #2a2e43;
+  border: 1px solid #2a2e43;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.notification-options, .miscellaneous-options, .credentials-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-options label, .miscellaneous label, .credentials label {
+  font-size: 0.875rem;
+  color: #aaa;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.notification-options input[type="checkbox"], .miscellaneous-options input[type="checkbox"], .credentials-options input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Specific styles for the watch modal */
+#watchModal .modal-content {
+  width: 90%;
+  max-width: 800px;
+}
+
+#watchModal h2 {
+  margin-top: 0;
+}
+
+#watchModal label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+#watchModal textarea {
+  width: 100%;
+  height: 400px;
+  resize: vertical; /* Allow vertical resizing only */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif; /* Set a consistent font */
+  background-color: #2a2e43;
+  border: 1px solid #2a2e43;
+  outline: none; /* Remove default outline */
+  transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+#watchModal textarea:focus {
+  border-color: #007BFF; /* Blue border on focus */
+  background-color: #fff; /* White background on focus */
+}
+
+#watchModal input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.toast {
+  visibility: hidden;
+  min-width: 250px;
+  max-width: 400px;
+  margin-left: -125px;
+  background-color: #161a2b;
+  color: #fff;
+  text-align: left;
+  border-radius: 5px;
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  right: 30px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: visibility 0s, opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.toast-icon {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #4cd3c2;
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #4cd3c2;
+  animation: progress 3s linear forwards;
+}
+
+.toast-close {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 20px;
+  color: #fff;
+}
+
+@keyframes progress {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}

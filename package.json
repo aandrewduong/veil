@@ -1,0 +1,15 @@
+{
+  "name": "veil-v2-alpha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "path": "^0.12.7"
+  }
+}

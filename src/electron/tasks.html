@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="drag-region"></div>
+    <div class="container">
+        <div class="window-controls">
+            <img src="./img/minimize.png" alt="Minimize Icon" id="minimizeBtn" class="window-icon" onclick="window.electron.minimizeWindow()">
+            <img src="./img/close.png" alt="Close Icon" id="closeBtn" class="window-icon" onclick="window.electron.closeWindow()">
+        </div>
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Veil</h1>
+            </div>
+            <ul class="menu">
+                <li><a href="index.html"><img src="./img/home.png" alt="Home Icon" class="icon">Dashboard</a></li>
+                <li><a href="credentials.html"><img src="./img/key.png" alt="Credentials Icon" class="icon">Credentials</a></li>
+                <li><a href="tasks.html"><img src="./img/boxes.png" alt="Tasks Icon" class="icon">Tasks</a></li>
+                <li><a href="settings.html"><img src="./img/settings.png" alt="Settings Icon" class="icon">Settings</a></li>
+            </ul>
+            <div class="status">
+                <a href="#" class="status-item" onclick="window.electron.openDocumentation()"><img src="./img/document.png" alt="Documentation Icon" class="icon">Documentation</a>
+                <a href="#" class="status-item" onclick="window.electron.getSupport()"><img src="./img/help.png" alt="Help Icon" class="icon">Get Support</a>
+                <div class="connection-status">
+                    <span id="statusIndicator" class="status-indicator disconnected"></span>
+                    <span id="statusText">Disconnected</span>
+                </div>
+                <div class="version">
+                    <p>v1.0.0 (latest version)</p>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="tasks-content">
+                <h2>Tasks</h2>
+                <div class="button-container">
+                    <button class="create-btn">Create</button>
+                    <button class="delete-btn" id="deleteTasks">Delete</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th> <!-- For the checkbox column -->
+                                <th>Task ID</th>
+                                <th>Mode</th>
+                                <th>Term</th>
+                                <th>CRN(s)</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Repeat the rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="createModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Create Task</h2>
+                <form id="createForm">
+                    <label for="createTaskId">Task ID</label>
+                    <input type="text" id="createTaskId" name="createTaskId">
+                    <label for="createMode">Mode</label>
+                    <select id="createMode" name="createMode">
+                        <option value="Signup">Signup</option>
+                        <option value="Watch">Watch</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <label for="createTerm">Term</label>
+                    <select id="createTerm" name="createTerm">
+                        <!-- Add more options as needed -->
+                    </select>
+                    <label for="createCrns">CRNs</label>
+                    <input type="text" id="createCrns" name="createCrns">
+                    <small id="createCrnsError" class="error-message"></small>
+                    <button type="button" id="createTask">Create</button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Edit Task</h2>
+                <form id="editForm">
+                    <label for="editTaskId">Task ID</label>
+                    <input type="text" id="editTaskId" name="editTaskId" readonly>
+                    <label for="editMode">Mode</label>
+                    <select id="editMode" name="editMode">
+                        <option value="Signup">Signup</option>
+                        <option value="Watch">Watch</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <label for="editTerm">Term</label>
+                    <select id="editTerm" name="editTerm">
+                        <!-- Add more options as needed -->
+                    </select>
+                    <label for="editCrns">CRNs</label>
+                    <input type="text" id="editCrns" name="editCrns">
+                    <small id="editCrnsError" class="error-message"></small>
+                    <button type="button" id="saveEdit">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="watchModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Task Log</h2>
+                <form id="watchForm">
+                    <label for="watchTaskId">Task ID</label>
+                    <input type="text" id="watchTaskId" name="watchTaskId" readonly>
+                    <label for="watchTaskLog">Log</label>
+                    <input type="text" id="watchTaskLog" name="watchTaskLog" readonly>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/tasks.js"></script>
+</body>
+</html>
