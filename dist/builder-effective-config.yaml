@@ -6,7 +6,7 @@ productName: veil
 files:
   - filter:
       - src/**/*
-extraFiles:
+extraResources:
   - from: src/engine/engine.exe
     to: engine.exe
 win:

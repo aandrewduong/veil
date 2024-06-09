@@ -97,7 +97,7 @@ async function pollTaskStatus(taskId, startImg, statusCell) {
             startImg.src = './img/play.png';
             startImg.alt = 'Start';
         }
-    }, 1000);
+    }, 350);
 }
 
 // Toggle the task status between running and stopped

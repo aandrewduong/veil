@@ -1,4 +1,3 @@
-// Modules to control application life and create native browser window
 const { app, BrowserWindow, shell, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -7,6 +6,51 @@ const { spawn } = require('child_process');
 let mainWindow;
 let subprocess;
 
+// Function to register IPC handlers
+function registerIpcHandlers() {
+  ipcMain.handle('get-webhook-url', async () => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    if (fs.existsSync(settingsPath)) {
+      const data = fs.readFileSync(settingsPath, 'utf8');
+      const settings = JSON.parse(data);
+      return settings.webhookUrl || '';
+    }
+    return '';
+  });
+
+  ipcMain.handle('save-webhook-url', async (event, webhookUrl) => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    const settings = { webhookUrl };
+    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+  });
+
+  ipcMain.handle('get-credentials', async () => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    if (fs.existsSync(settingsPath)) {
+      const data = fs.readFileSync(settingsPath, 'utf8');
+      const settings = JSON.parse(data);
+      return {
+        username: settings.fhdaUsername || '',
+        password: settings.fhdaPassword || '',
+      };
+    }
+    return { username: '', password: '' };
+  });
+
+  ipcMain.handle('save-credentials', async (event, credentials) => {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    let settings = {};
+    if (fs.existsSync(settingsPath)) {
+      const data = fs.readFileSync(settingsPath, 'utf8');
+      settings = JSON.parse(data);
+    }
+    settings.fhdaUsername = credentials.username;
+    settings.fhdaPassword = credentials.password;
+    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+  });
+}
+
+// Function to create the main window
 function createWindow() {
   // Create the browser window
   mainWindow = new BrowserWindow({
@@ -28,23 +72,19 @@ function createWindow() {
       mainWindow = null;
   });
 
-  const exeSourcePath = path.join(process.resourcesPath, 'engine.exe');
-  const exeDestPath = path.join(app.getPath('userData'), 'engine.exe');
+  const exePath = path.join(process.resourcesPath, 'engine.exe');
 
-  // Log the paths to verify them
-  console.log(`Source Path: ${exeSourcePath}`);
-  console.log(`Destination Path: ${exeDestPath}`);
+  // Log the path to verify it
+  console.log(`Engine Path: ${exePath}`);
 
-  // Copy the file to the AppData directory
-  try {
-      fs.copyFileSync(exeSourcePath, exeDestPath);
-      console.log('engine.exe copied successfully.');
-  } catch (error) {
-      console.error('Error copying engine.exe:', error);
+  // Ensure the engine file exists at the specified location
+  if (!fs.existsSync(exePath)) {
+      console.error('engine.exe does not exist at the specified path:', exePath);
+      return;
   }
 
-  // Spawn the subprocess from the copied location
-  subprocess = spawn(exeDestPath);
+  // Spawn the subprocess from the specified location
+  subprocess = spawn(exePath);
 
   subprocess.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
@@ -78,55 +118,15 @@ function createWindow() {
     mainWindow.close();
   });
 
-  // Handle getting and saving the webhook URL
-  ipcMain.handle('get-webhook-url', async () => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    if (fs.existsSync(settingsPath)) {
-      const data = fs.readFileSync(settingsPath, 'utf8');
-      const settings = JSON.parse(data);
-      return settings.webhookUrl || '';
-    }
-    return '';
-  });
-
-  ipcMain.handle('save-webhook-url', async (event, webhookUrl) => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    const settings = { webhookUrl };
-    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
-  });
-
-  // Handle getting and saving credentials
-  ipcMain.handle('get-credentials', async () => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    if (fs.existsSync(settingsPath)) {
-      const data = fs.readFileSync(settingsPath, 'utf8');
-      const settings = JSON.parse(data);
-      return {
-        username: settings.fhdaUsername || '',
-        password: settings.fhdaPassword || '',
-      };
-    }
-    return { username: '', password: '' };
-  });
-
-  ipcMain.handle('save-credentials', async (event, credentials) => {
-    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
-    let settings = {};
-    if (fs.existsSync(settingsPath)) {
-      const data = fs.readFileSync(settingsPath, 'utf8');
-      settings = JSON.parse(data);
-    }
-    settings.fhdaUsername = credentials.username;
-    settings.fhdaPassword = credentials.password;
-    fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
-  });
-
   // Optionally open DevTools
   // mainWindow.webContents.openDevTools();
 }
 
 // App ready event handler
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  registerIpcHandlers();
+  createWindow();
+});
 
 // Re-create a window in the app when the dock icon is clicked and there are no other windows open (macOS)
 app.on('activate', () => {
