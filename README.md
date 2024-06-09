@@ -1,6 +1,7 @@
 ## Veil
 
 Veil is a project with a Golang backend and an Electron frontend that efficiently scrapes, processes, and manages class and college enrollment data for De Anza and Foothill College. It supports class enrollment and monitoring.
+The ultimate program for the Foothill-De Anza district at your fingertips.
 
 ## Prerequisites
 
