@@ -165,10 +165,11 @@ function openCreateModal() {
         clearError(createCrns, createCrnsError);
 
         const credentials = await window.electron.getCredentials();
+        const webhookUrl = await window.electron.getWebhookUrl();
         const response = await fetch('http://localhost:1942/tasks/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: taskId, mode, term, crns, username: credentials.username, password: credentials.password, status: "Created" })
+            body: JSON.stringify({ id: taskId, mode, term, crns, username: credentials.username, password: credentials.password, status: "Created", webhook_url: webhookUrl })
         });
         const data = await response.json();
         if (data.message === 'Task created') {

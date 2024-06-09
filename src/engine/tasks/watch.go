@@ -61,6 +61,7 @@ func (t *Task) Watch() error {
 	if numWaitlistCapacity > numWaitlistActual && numWaitlistSeatsAvailable > 0 || (numEnrollmentSeatsAvailable > 0 && numWaitlistSeatsAvailable > 0) {
 		t.Status = "Now available"
 		t.CRNs = []string{t.Crns}
+		t.Status = "Starting signup"
 		t.Signup()
 	} else {
 		if numEnrollmentSeatsAvailable >= 1 && numWaitlistSeatsAvailable == 0 {

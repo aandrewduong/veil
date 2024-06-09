@@ -1,8 +1,8 @@
 version: 1.0.0
 files:
   - url: veil-Setup-1.0.0.exe
-    sha512: SbXUPu2NeTvJ6nXboDKm9y6ROk4nm1dh95slwbwpUjzMvYSu0ycOADshmsQxymdh1K8n/MGMU7znSNPZLFXayQ==
-    size: 67517327
+    sha512: gMHS1VyBgM+6mfZ/YU46yoftqmevVKlGQo/BMfYgCEu7avduOKdVryLIJb1bCQeAh5FgfKgBQSWgYJu9hZ44kg==
+    size: 67518238
 path: veil-Setup-1.0.0.exe
-sha512: SbXUPu2NeTvJ6nXboDKm9y6ROk4nm1dh95slwbwpUjzMvYSu0ycOADshmsQxymdh1K8n/MGMU7znSNPZLFXayQ==
-releaseDate: '2024-06-09T04:10:55.659Z'
+sha512: gMHS1VyBgM+6mfZ/YU46yoftqmevVKlGQo/BMfYgCEu7avduOKdVryLIJb1bCQeAh5FgfKgBQSWgYJu9hZ44kg==
+releaseDate: '2024-06-09T04:31:28.410Z'

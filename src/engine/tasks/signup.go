@@ -205,12 +205,13 @@ func (t *Task) SendBatch() error {
 				switch data.StatusDescription {
 				case "Registered":
 					t.Status = "Registered"
-					t.SendNotification(data.CourseTitle, fmt.Sprintf("Successful Enrollment (%s)", data.CourseReferenceNumber))
+					t.SendNotification(data.CourseTitle, "Registered")
 				case "Waitlisted":
 					t.Status = "Waitlisted"
-					t.SendNotification(data.CourseTitle, fmt.Sprintf("Successful Waitlisted (%s)", data.CourseReferenceNumber))
+					t.SendNotification(data.CourseTitle, "Waitlisted")
 				case "Errors Preventing Registration":
 					t.Status = data.CrnErrors[0].Message
+					t.SendNotification(data.CourseTitle, data.CrnErrors[0].Message)
 				}
 			}
 		}

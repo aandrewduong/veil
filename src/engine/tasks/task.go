@@ -25,9 +25,9 @@ type Task struct {
 	Status        string `json:"status"`
 	Username      string `json:"username"`
 	Password      string `json:"password"`
+	WebhookURL    string `json:"webhook_url"`
 	Client        tls_client.HttpClient
 	Session       Session
-	WebhookURL    string
 	HomepageURL   string
 	SSOManagerURL string
 	CRNs          []string
@@ -93,7 +93,6 @@ func (tm *TaskManager) RunTask(id string) bool {
 			// Perform the task's work without holding the mutex
 			task.InitClient()
 			task.CRNs = strings.Split(task.Crns, ",")
-			fmt.Println(task)
 			if task.Mode == "Watch" {
 				task.Watch()
 			} else if task.Mode == "Signup" {
@@ -228,13 +227,12 @@ func extractModel(jsonData []byte) (map[string]interface{}, error) {
 }
 
 // SendNotification sends a notification with the given action and message.
-func (t *Task) SendNotification(action, message string) error {
+func (t *Task) SendNotification(action string, message string) error {
 	payload := WebhookPayload{
-		Username: "veil-v2",
+		Username: "veil",
 		Embeds: []Embed{
 			{
 				Title:       action,
-				Color:       3913895,
 				Description: message,
 				Footer: &Footer{
 					Text: "Veil",
@@ -250,6 +248,6 @@ func (t *Task) SendNotification(action, message string) error {
 		{"content-type", "application/json"},
 		{"user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"},
 	}
-	t.DoReq(t.MakeReq("POST", t.WebhookURL, headers, jsonData))
+	t.DoReq(t.MakeReq("POST", t.WebhookURL, headers, []byte(string(jsonData))))
 	return nil
 }
