@@ -18,14 +18,13 @@
                 <h1>Veil</h1>
             </div>
             <ul class="menu">
-                <li><a href="index.html"><img src="./img/home.png" alt="Home Icon" class="icon">Dashboard</a></li>
-                <li><a href="credentials.html"><img src="./img/key.png" alt="Credentials Icon" class="icon">Credentials</a></li>
-                <li><a href="tasks.html"><img src="./img/boxes.png" alt="Tasks Icon" class="icon">Tasks</a></li>
-                <li><a href="settings.html"><img src="./img/settings.png" alt="Settings Icon" class="icon">Settings</a></li>
+                <li><a href="index.html" draggable="false"><img src="./img/home.png" alt="Home Icon" class="icon">Dashboard</a></li>
+                <li><a href="credentials.html" draggable="false"><img src="./img/key.png" alt="Credentials Icon" class="icon">Credentials</a></li>
+                <li><a href="tasks.html" draggable="false"><img src="./img/boxes.png" alt="tasks Icon" class="icon">Tasks</a></li>
+                <li><a href="settings.html" draggable="false"><img src="./img/settings.png" alt="Settings Icon" class="icon">Settings</a></li>
+                <li><a href="https://aandrewduong.gitbook.io/veil" id="documentation-link" draggable="false"><img src="./img/document.png" alt="Document Icon" class="icon">Documentation</a></li>
             </ul>
             <div class="status">
-                <a href="#" class="status-item" onclick="window.electron.openDocumentation()"><img src="./img/document.png" alt="Documentation Icon" class="icon">Documentation</a>
-                <a href="#" class="status-item" onclick="window.electron.getSupport()"><img src="./img/help.png" alt="Help Icon" class="icon">Get Support</a>
                 <div class="connection-status">
                     <span id="statusIndicator" class="status-indicator disconnected"></span>
                     <span id="statusText">Disconnected</span>
@@ -46,7 +45,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="selectAll"></th> <!-- For the checkbox column -->
+                                <th><input type="checkbox" id="selectAll"></th>
                                 <th>Task ID</th>
                                 <th>Mode</th>
                                 <th>Term</th>
@@ -56,7 +55,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Repeat the rows as needed -->
                         </tbody>
                     </table>
                 </div>
@@ -83,44 +81,6 @@
                     <input type="text" id="createCrns" name="createCrns">
                     <small id="createCrnsError" class="error-message"></small>
                     <button type="button" id="createTask">Create</button>
-                </form>
-            </div>
-        </div>
-        
-        <div id="editModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Edit Task</h2>
-                <form id="editForm">
-                    <label for="editTaskId">Task ID</label>
-                    <input type="text" id="editTaskId" name="editTaskId" readonly>
-                    <label for="editMode">Mode</label>
-                    <select id="editMode" name="editMode">
-                        <option value="Signup">Signup</option>
-                        <option value="Watch">Watch</option>
-                        <!-- Add more options as needed -->
-                    </select>
-                    <label for="editTerm">Term</label>
-                    <select id="editTerm" name="editTerm">
-                        <!-- Add more options as needed -->
-                    </select>
-                    <label for="editCrns">CRNs</label>
-                    <input type="text" id="editCrns" name="editCrns">
-                    <small id="editCrnsError" class="error-message"></small>
-                    <button type="button" id="saveEdit">Save</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="watchModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Task Log</h2>
-                <form id="watchForm">
-                    <label for="watchTaskId">Task ID</label>
-                    <input type="text" id="watchTaskId" name="watchTaskId" readonly>
-                    <label for="watchTaskLog">Log</label>
-                    <input type="text" id="watchTaskLog" name="watchTaskLog" readonly>
                 </form>
             </div>
         </div>

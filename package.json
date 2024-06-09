@@ -1,15 +1,56 @@
 {
-  "name": "veil-v2-alpha",
+  "name": "veil",
   "version": "1.0.0",
-  "description": "",
-  "main": "./src/electron/main.js",
+  "author": {
+    "name": "Andrew Duong"
+  },
+  "description": "veil",
+  "main": "src/electron/main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "path": "^0.12.7"
+  "build": {
+    "appId": "com.veil.id",
+    "productName": "veil",
+    "directories": {
+      "output": "dist",
+      "buildResources": "src/electron/img"
+    },
+    "files": [
+      "src/**/*"
+    ],
+    "extraFiles": [
+      {
+        "from": "src/engine/engine.exe",
+        "to": "engine.exe"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "src/electron/img/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "src/electron/img/icon.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ],
+      "icon": "src/electron/img/icon.png"
+    }
+  },
+  "devDependencies": {
+    "electron": "15.3.0",
+    "electron-builder": "^24.13.3"
   }
 }

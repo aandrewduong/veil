@@ -1,0 +1,27 @@
+directories:
+  output: dist
+  buildResources: src/electron/img
+appId: com.veil.id
+productName: veil
+files:
+  - filter:
+      - src/**/*
+extraFiles:
+  - from: src/engine/engine.exe
+    to: engine.exe
+win:
+  target:
+    - nsis
+    - zip
+  icon: src/electron/img/icon.ico
+mac:
+  target:
+    - dmg
+    - zip
+  icon: src/electron/img/icon.icns
+linux:
+  target:
+    - AppImage
+    - tar.gz
+  icon: src/electron/img/icon.png
+electronVersion: 15.3.0
