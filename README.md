@@ -21,7 +21,7 @@ Documentation can be found [here](https://aandrewduong.gitbook.io/veil).
 
 ![image](https://github.com/aandrewduong/veil-v2-alpha/assets/135930507/e9e9205a-e115-487c-8f8d-0228f01debca)
 
-## Installation
+## Installation/Setup
 
 Installation can be found [here](https://github.com/aandrewduong/veil-v2-alpha/releases/tag/Release).
 
